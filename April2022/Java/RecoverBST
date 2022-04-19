@@ -1,0 +1,28 @@
+class Solution {
+    
+    private TreeNode prev=null;
+    private TreeNode one=null;
+    private TreeNode two=null;
+    
+    public void recoverTree(TreeNode root) {
+        inorder(root);
+        int temp=one.val; // swap the dip values
+        one.val=two.val;
+        two.val=temp;
+           
+    }
+    private void inorder(TreeNode curr){
+        if(curr==null){
+            return;
+        }
+        inorder(curr.left);
+        if(prev!=null && prev.val>curr.val){ // checking the dip condition
+            if(one==null){  // to check if it is first dip or not
+                one=prev;  //for first dip previous value has to change
+            }
+            two=curr;  // for second dip second value ie-> current element
+        }
+        prev=curr;
+        inorder(curr.right);
+    }
+}
